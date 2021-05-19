@@ -1,6 +1,7 @@
 package h03;
 
 import java.util.List;
+import java.util.Objects;
 
 public class SelectionOfCharsIndex implements FunctionToInt<Character> {
 
@@ -11,7 +12,7 @@ public class SelectionOfCharsIndex implements FunctionToInt<Character> {
 	 *                    is unique
 	 */
 	public SelectionOfCharsIndex(List<Character> theAlphabet) {
-
+		
 		int listSize = theAlphabet.size();
 		theChars = new char[listSize];
 		for (int i = 0; i < listSize; i++)
