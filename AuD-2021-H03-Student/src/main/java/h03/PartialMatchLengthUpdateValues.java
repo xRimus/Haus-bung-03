@@ -1,5 +1,7 @@
 package h03;
 
+import java.util.ArrayList;
+
 public abstract class PartialMatchLengthUpdateValues<T> {
 
 	public PartialMatchLengthUpdateValues(FunctionToInt<T> lookUpTable) {
@@ -15,19 +17,7 @@ public abstract class PartialMatchLengthUpdateValues<T> {
 		if (searchString == null || searchString.length == 0) {
 			return 0;
 		}
-		
-		
-		for (int i=0; i<searchString.length; i++) {
-			if (searchString[i] != searchString[searchString.length-1-i]) {
-				return Math.max(0, i);
-			}
-		}
-		
-		//Das muss noch mal geprüft werden!
-		return searchString.length-1;
-		
 
-		/*
 		ArrayList<Integer> possibleStartsOfSubstring = new ArrayList<>();
 		for (int i = 1; i < searchString.length; i++)
 			if (searchString[0].equals(searchString[i]))
@@ -51,7 +41,6 @@ public abstract class PartialMatchLengthUpdateValues<T> {
 			}
 		}
 		return substringLength;
-		*/
 	
 	}
 }

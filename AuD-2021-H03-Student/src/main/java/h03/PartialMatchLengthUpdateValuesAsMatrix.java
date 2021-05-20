@@ -55,6 +55,12 @@ public class PartialMatchLengthUpdateValuesAsMatrix<T> extends PartialMatchLengt
 			}
 		}
 		
+		
+		int relevantForLastRow = computePartialMatchLengthUpdateValues(searchString);
+		for (int j=0; j<lookUpTable.sizeOfAlphabet(); j++) {
+			matrix[searchString.length][j] = matrix[relevantForLastRow][j];
+		}
+		
 	}
 
 	private int[][] matrix;
