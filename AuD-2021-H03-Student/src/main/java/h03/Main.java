@@ -6,9 +6,6 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
 
-		UnicodeNumberOfCharIndex aCharIndex = new UnicodeNumberOfCharIndex();
-		System.out.println(aCharIndex.apply('1'));
-
 		List<Character> chars = List.of('a', 'g', 'i', 'n');
 		SelectionOfCharsIndex lookUpTable = new SelectionOfCharsIndex(chars);
 		Character[] searchString = new Character[] { 'g', 'a', 'g' };
