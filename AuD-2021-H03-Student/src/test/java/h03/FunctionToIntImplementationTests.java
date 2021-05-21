@@ -1,30 +1,21 @@
 package h03;
 
-import static h03.Utils.definitionCorrect;
-import static java.lang.reflect.Modifier.isAbstract;
-import static java.lang.reflect.Modifier.isPrivate;
-import static java.lang.reflect.Modifier.isStatic;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import h03.Utils.DefinitionCheck;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import h03.Utils.DefinitionCheck;
+import java.lang.reflect.*;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static h03.Utils.definitionCorrect;
+import static java.lang.reflect.Modifier.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @DefinitionCheck("checkClass")
 class UnicodeNumberOfCharIndexTest {

@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import h03.Utils;
-import h03.Utils.DefinitionCheck;
-
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static h03.Utils.*;
 import static java.lang.reflect.Modifier.*;
@@ -377,9 +375,13 @@ class PartialMatchLengthUpdateValuesAsAutomatonTest {
             assertEquals(i + 1, getPartialMatchLengthUpdate.invoke(instance, i, needle[i]),
                     "getPartialMatchLengthUpdate(i, needle[i]) should return i + 1");
 
-        // the method is rather trivial to implement, that the states array is correct is more important
-        // TODO: this one is not _as_ trivial, maybe a more sophisticated test would be quite helpful?
-        //  Fixed alphabet (A-Z) -> test that the returned value for Characters that are not part of the needle is 0
+        List<Character> needleList = Arrays.stream(needle).collect(Collectors.toUnmodifiableList());
+
+        for (Object character : ALPHABET)
+            if (!needleList.contains((Character) character))
+                for (int i = 0; i < needle.length + 1; i++)
+                    assertEquals(0, getPartialMatchLengthUpdate.invoke(instance, i, character),
+                            "getPartialMatchLengthUpdate(...) should return 0 for values that are not in needle");
     }
 
     private static class TransitionTest {
@@ -412,10 +414,31 @@ class PartialMatchLengthUpdateValuesAsAutomatonTest {
                     else if (field.getType().equals(List.class))
                         target = field;
 
-            assertTrue(index != null && target != null, "Transition is missing one or more required fields");
+            assertTrue(index != null && target != null,
+                    "Transition is missing one or more required fields or they don't have the right type, visibility, etc.");
 
             index.setAccessible(true);
             target.setAccessible(true);
         }
     }
 }
+/*
+class ComputePartialMatchLengthUpdateValuesTest extends PartialMatchLengthUpdateValues<Character> {
+
+    @SuppressWarnings("unchecked")
+    public ComputePartialMatchLengthUpdateValuesTest() throws ReflectiveOperationException {
+        super((FunctionToInt<Character>) functionToIntProxyForAlphabet(ALPHABET));
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(RandomNeedleProvider.class)
+    public void testComputePartialMatchLengthUpdateValues(Character[] needle, int repeatLength) {
+        assertEquals(repeatLength, computePartialMatchLengthUpdateValues(needle));
+    }
+
+    @Override
+    public int getPartialMatchLengthUpdate(int i, Character character) {
+        return 0;
+    }
+}
+*/

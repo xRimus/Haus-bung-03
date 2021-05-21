@@ -3,9 +3,6 @@ package h03;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import h03.Utils;
-import h03.Utils.DefinitionCheck;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

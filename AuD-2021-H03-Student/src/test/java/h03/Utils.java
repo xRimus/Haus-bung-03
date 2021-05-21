@@ -74,6 +74,17 @@ public class Utils {
         System.out.println("Seed: " + SEED);
     }
 
+    @Test
+    public void optionalTest() {
+        try {
+            Class.forName("h03.ComputePartialMatchLengthUpdateValuesTest");
+        } catch (ClassNotFoundException e) {
+            System.out.println("There is an optional test for PartialMatchLengthUpdateValues.computePartialMatchLengthUpdateValues(T[]) in " +
+                    "PMLUVImplementationTests.java which requires FunctionToInt and PartialMatchLengthUpdateValues to be implemented and can " +
+                    "be enabled by removing the enclosing comment markers at the end of the file");
+        }
+    }
+
     private static final Map<Class<?>, Boolean> CLASS_CORRECT_LOOKUP = new HashMap<>();
 
     public static boolean definitionCorrect(Class<?> c) {
@@ -154,7 +165,12 @@ class RandomMatcherArgumentsProvider implements ArgumentsProvider {
 
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
-        return Stream.generate(() -> {
+        Stream<Arguments> staticArguments = Stream.of(Arguments.of(
+                "gagbGAGBGAGSSjhdjshdjGAGBGAGSSgagbGAGBGAGSS".chars().mapToObj(Utils.CAST_TO_CHARACTER).collect(Collectors.toUnmodifiableList()),
+                "GAGBGAGSS".chars().mapToObj(Utils.CAST_TO_CHARACTER).collect(Collectors.toUnmodifiableList()),
+                List.of(5, 22, 35)
+        ));
+        Stream<Arguments> randomArguments = Stream.generate(() -> {
             List<Character> needle = Utils.randomUppercaseCharStream(MAX_NEEDLE_LENGTH).collect(Collectors.toList()),
                             stack = Utils.randomLowercaseCharStream(STACK_SIZE)
                                            .map(character -> {
@@ -190,6 +206,8 @@ class RandomMatcherArgumentsProvider implements ArgumentsProvider {
                 }
 
             return Arguments.of(stack, needle, matchIndices);
-        }).limit(MAX_STREAM_SIZE);
+        });
+
+        return Stream.concat(staticArguments, randomArguments).limit(MAX_STREAM_SIZE);
     }
 }

@@ -4,15 +4,21 @@ import java.util.ArrayList;
 
 public abstract class PartialMatchLengthUpdateValues<T> {
 
-	public PartialMatchLengthUpdateValues(FunctionToInt<T> lookUpTable) {
-		this.lookUpTable = lookUpTable;
+	public PartialMatchLengthUpdateValues(FunctionToInt<T> alphabet) {
+		this.alphabet = alphabet;
 	}
 
-	protected FunctionToInt<T> lookUpTable;
+	protected FunctionToInt<T> alphabet;
+
+	protected int searchStringLength;
 
 	abstract public int getPartialMatchLengthUpdate(int a, T b);
 
 	protected int computePartialMatchLengthUpdateValues(T[] searchString) {
+
+		if (searchString == null || searchString.length == 0) {
+			return 0;
+		}
 
 		ArrayList<Integer> possibleStartsOfSubstring = new ArrayList<>();
 		for (int i = 1; i < searchString.length; i++)
